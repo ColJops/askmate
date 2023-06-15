@@ -1,0 +1,44 @@
+{% extends "layout.html"%} {% block content%}
+
+<div class="content-section">
+	<form method="POST" action="">
+		<fieldset>
+			<div>
+				<h5>
+					{{form.username.label(class="form-control-label")}}
+					{{form.username(class="form-control form-control-lg")}}
+				</h5>
+				<br />
+			</div>
+			<div>
+				<h5>
+					{{form.email.label}} {{form.email(class="form-control
+					form-control-lg")}}
+				</h5>
+				<br />
+			</div>
+			<div>
+				<h5>
+					{{form.password.label}} {{form.password(class="form-control
+					form-control-lg")}}
+				</h5>
+				<br />
+			</div>
+			<div>
+				<h5>
+					{{form.confirm_password.label}}
+					{{form.confirm_password(class="form-control form-control-lg")}}
+				</h5>
+				<br />
+			</div>
+		</fieldset>
+		<div>{{form.submit(class="btn btn-outline-info")}}</div>
+	</form>
+</div>
+<div>
+	<small>
+		Already have an account? <a href="{{url_for('login')}}">Sign in</a>
+	</small>
+</div>
+
+{%endblock content%}

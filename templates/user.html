@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<table style="width:100%;">
+    <thead>
+        <tr>
+        <th>Username</th>
+        <th>Registration date</th>
+        <th>Reputation</td>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>{% for info in userInfo %}
+            <td>{{ info["user_name"] }}</td>
+            <td>{{ info["date_reg"] }}</td>
+            <td>{{ info["user_rep"] }}</td>
+            {% endfor %}
+        </tr>
+        <tr><td colspan="3" style="text-align: center;"><h3>User Questions</h3></td></tr>
+        <tr>
+            <th>Title</th>
+            <th>Submission Time</th>
+        </tr>
+        {% for question in userQuestions %}
+        <tr>
+            <td>{{ question["title"] }}</td>
+            <td>{{ question["submission_time"] }}</td>
+            {% endfor %}
+        </tr>
+        <tr><td colspan="3" style="text-align: center;"><h3>User Answers</h3></td></tr>
+        <tr>
+            <th>Title</th>
+            <th>Submission Time</th>
+        </tr>
+        {% for answer in userAnswers %}
+        <tr>
+            <td>{{ answer["message"] }}</td>
+            <td>{{ answer["submission_time"]}}</td>
+            {% endfor %}
+        </tr>
+        <tr><td colspan="3" style="text-align: center;"><h3>User Comments</h3></td></tr>
+        <tr>
+            <th>Title</th>
+            <th>Submission Time</th>
+        </tr>
+        {% for commnent in userComment %}
+        <tr>
+            <th>{{ comment["message"] }}</th>
+            <th>{{ comment["submission_time"] }}</th>
+            {% endfor %}
+        </tr>        
+    </tbody>
+</table>
+
+{% endblock %}

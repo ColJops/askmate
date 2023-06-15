@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h1>User registration</h1>
+    <p>{{ error if error }}</p>
+    <div class="container-user-registration">
+        <form class="user-registration" action="{{ url_for('registration') }}" method="post">
+            <label for="email">User email:</label>
+            <input name="email" type="email" id="email" placeholder="email@email.com">
+            <label for="password">User password:</label>
+            <input name="password" type="password" id="password" placeholder="password" required>
+            <button type="submit">Sign In</button>
+        </form>
+    </div>
+
+{% endblock %}

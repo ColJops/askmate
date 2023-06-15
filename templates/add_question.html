@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Add new question</h1>
+    <form action=" {{ url_for('add_question') }} " enctype="multipart/form-data" method="POST">
+        <p>Question title<br>
+        <input type="text" name="title" required minlength="10" size="51">
+        </p>
+
+        <p>Question message<br>
+        <textarea cols="50" rows="10" name="message" autofocus required minlength="10"></textarea>
+        </p>
+        <br>
+        <p>
+            Choose the tag:
+            <select type="text" name="tag" required>
+                <option value="python">Python</option>
+                <option value="sql">SQL</option>
+                <option value="css">CSS</option>
+            </select>
+        </p>
+        Choose an image:
+        <div class = "img-upload-wrapper">
+            <input type="file" name="image">
+        </div><br>
+        {%  if user %}
+        <button type="submit">Submit</button><buton><input type="reset" value="Reset"></buton>
+        {% else %}
+        <button type="submit" disabled>Submit</button><buton><input type="reset" value="Reset"></buton>
+        {% endif %}
+
+    </form>
+
+    <p><a href="{{ url_for('list_question') }}">Go back to main page!</a></p>
+
+{% endblock %}

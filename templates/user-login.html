@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+   <h1>User Login</h1>
+    <div class="container-user-login">
+        <span class="error-message">
+            {{ error if error else "" }}
+        </span>
+        <form class="user-login" action="{{ url_for('login') }}" method="post">
+            <label for="email">User email:</label>
+            <input name="email" type="email" id="email" placeholder="email@email.com">
+            <label for="password">User password:</label>
+            <input name="password" type="password" id="password" placeholder="password" required>
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+
+{% endblock %}

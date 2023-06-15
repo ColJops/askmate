@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+    <h1>Add new answer</h1>
+    <form action="{{ url_for('post_answer', question_id=question_id) }}" enctype="multipart/form-data" method="POST">
+        <p>Your answer<br>
+            <textarea cols="50" rows="10" name="message" autofocus required minlength="10"></textarea>
+        </p>
+        <br>
+        Choose an image:
+        <div class = "img-upload-wrapper">
+            <input type="file" name="image">
+        </div><br>
+        <br>
+        <button type="submit">Submit!</button>
+    </form>
+
+    <p>
+        <a href="{{ url_for('display_question', question_id=question_id) }}">Go back to question</a>
+    </p>
+
+{% endblock %}

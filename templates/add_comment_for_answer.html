@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Add new comment</h1>
+    <form action="{{ url_for('add_new_answer_comment', answer_id=answer_id, question_id=question_id) }}" method="POST">
+        <p>Your comment<br>
+            <textarea cols="50" rows="10" name="message" autofocus required minlength="10"></textarea>
+        </p>
+        <br>
+        {% if user %}
+        <button type="submit">Submit</button>
+        {% else %}
+        <button type="submit" disabled>Submit</button>
+        {% endif %}
+    </form>
+
+    <p>
+        <a href="{{ url_for('show_answer_and_comments', answer_id=answer_id, question_id=question_id) }}">Go back to answer</a>
+    </p>
+
+{% endblock %}

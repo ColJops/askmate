@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h3>Answer</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Submission<br>time</th>
+            <th>View<br>number</th>
+            <th>Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in answer %}
+            <tr>
+                <td>{{ data["submission_time"] }}</td>
+                <td>{{ data["vote_number"] }}</td>
+                <td>{{ data["message"] }}</td>
+                {% if data["image"] !='' %}
+                <td><img src="{{url_for('static',filename='/images/'+data['image'])}}" style="max-width: 100%; height: auto;"></td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <h4>Comments</h4>
+    <table>
+        <thead>
+        <tr>
+            <th>Submission<br>time</th>
+            <th>Message</th>
+            <th>Edited count</th>
+            <th>Delete comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment["submission_time"] }}</td>
+                <td>{{ comment["message"] }}</td>
+                <td>{{ comment["edited_count"] }}</td>
+                <td><a href="{{ url_for('confirm_delete_comment' comment_id=comment['id'], question_id=question_id, answer_id=comment['answer_id']) }}">Delete comment</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{{ url_for('route_new_answer_comment', answer_id=answer_id, question_id=question_id) }}">Add new comment</a></p>
+    <p><a href="{{ url_for('route_new_answer_comment', answer_id=answer_id, question_id=question_id) }}">Add new comment</a></p>
+    <br>
+    <p><a href="{{ url_for('display_question', question_id=question_id) }}">Back to question</a></p>
+
+{% endblock %}

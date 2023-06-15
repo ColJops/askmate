@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+<ul class="list-group">
+    <li class="list-group-item list-group-item-light">Total question by tags:<br>
+        Python: {{ tags['python'] }}<br>
+        SQL: {{ tags['sql'] }}<br>
+        CSS: {{ tags['css'] }}<br>
+    </li>
+    <li class="list-group-item list-group-item-light">We have total {{ users["count"] }} <a href='/users' style="color:black;">users</a> in our database.</li>
+
+</ul>
+{% endblock %}

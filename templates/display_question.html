@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <h1>{{ title }}</h1>
+    <h3>Question</h3>
+    <table cellspacing="30" style="width:100%;">
+        <thead>
+        <tr>
+            <th>Submission<br>time</th>
+            <th>View<br>number</th>
+            <th>Vote<br>number</th>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in question %}
+            <tr>
+                <td>{{ row["submission_time"] }}</td>
+                <td>{{ row["view_number"] }}</td>
+                <td>{{ row["vote_number"] }}</td>
+                <td>{{ row["title"] }}</td>
+                <td>{{ row["message"] }}</td>
+                {% if row["image"] != None %}
+                <td><img src="{{url_for('static',filename='/images/'+row['image'])}}" style="max-width: 100%; height: auto;"></td>
+                {% else %}
+                <td></td>
+                {% endif %}
+            </tr>
+            
+        {% endfor %}
+        </tbody>
+    </table>
+    <table cellspacing="30" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Author </th>
+                <th>Tag</th>
+                <th rowspan="4"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> {{ owner['user_name']}} </td><br>
+                <td> {{ tag}} </td>
+                {% if user %} 
+                {% if owner['user_name'] == user %}
+                <td> <a href="{{ url_for('route_edit_question', question_id=question_id) }}">Edit this question</a> </td>
+                <td> <a href="{{ url_for('confirm_delete_question', question_id=question_id) }}">Delete question</a> </td>
+                {% else %}
+                <td> <a href="#" >Edit this question</a> </td>
+                <td> <a href="#">Delete question</a> </td>
+                {% endif %} 
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
+    <p></p>
+    <p></p>
+    <br>
+    <h3>Comments</h3>
+    <table cellspacing="30" style="width:100%;">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Submission<br>time</th>
+            <th>Message</th>
+            <th>Edited count</th>
+            <th>Edit comment</th>
+            <th>Delete comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ ownerc['user_name']}}</td>
+                <td>{{ comment["submission_time"] }}</td>
+                <td>{{ comment["message"] }}</td>
+                <td>{{ comment["edited_count"] }}</td>
+                {% if user %} 
+                {% if owner['user_name'] == user %}
+                <td><a href="{{ url_for('route_edit_comment', comment_id=comment['id'], question_id=comment['question_id']) }}">Edit comment</a></td>
+                <td><a href="{{ url_for('confirm_delete_comment', comment_id=comment['id'], question_id=comment['question_id'], answer_id=comment['answer_id']) }}">Delete comment</a></td>
+                {% else %}
+                <td><a href="#">Edit comment</a></td>
+                <td><a href="#">Delete comment</a></td>
+                {% endif %}{% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if user %}
+    <p><a href="{{ url_for('route_new_question_comment', question_id=question_id) }}">Add new comment</a></p>
+    {% else %}
+    <p><a href="#">Add new comment</a></p>
+    {% endif %}
+    <br>
+    <h3>Answers</h3>
+    <table cellspacing="30" style="width:100%;">
+        <thead>
+        <tr>
+            <th>User</th>
+            <th>Submission<br>time</th>
+            <th>Vote<br>number</th>
+            <th>Message</th>
+            <th>Check comments</th>
+            <th>Edit answer</th>
+            <th>Delete answer</th>
+            <th>Vote</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for answer in answers %}
+            <tr>
+                <td>{{ ownera['user_name'] }}</td>
+                <td>{{ answer["submission_time"] }}</td>
+                <td>{{ answer["vote_number"] }}</td>
+                <td>{{ answer["message"] }}</td>
+                <td><a href="{{ url_for('show_answer_and_comments', answer_id=answer['id'], question_id=question_id) }}">Check comments</a></td>
+                {% if user %} 
+                {% if owner['user_name'] == user %}
+                <td><a href="{{ url_for('route_edit_answer', answer_id=answer['id'], question_id=question_id) }}">Edit answer</a></td>
+                <td><a href="{{ url_for('confirm_delete_answer', answer_id=answer['id'], question_id=answer['question_id']) }}">Delete answer</a></td>
+                {% else %}
+                <td><a href="#">Edit answer</a></td>
+                <td><a href="#">Delete answer</a></td>
+                {% endif %}{% endif %}
+                <td>
+                    {% if user %}
+                    <a href="{{ url_for('vote_for_answer', answer_id=answer['id'], question_id=question_id, vote_type='up') }}"><img src="/static/like.png" width="30" height="30" alt="Like"></a>
+                    <a href="{{ url_for('vote_for_answer', answer_id=answer['id'], question_id=question_id, vote_type='down') }}"><img src="/static/dislike.png" width="30" height="30" alt="Dislike"></a>
+                    {% else %}
+                    <a href="#"><img src="/static/like.png" width="30" height="30" alt="Like"></a>
+                    <a href="#"><img src="/static/dislike.png" width="30" height="30" alt="Dislike"></a>
+                    {% endif %}
+                </td>
+                {% if answer["image"] != None %}
+                <td><img src="{{url_for('static',filename='images/'+answer['image'])}}" style="max-width: 100%; height: auto;"></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if user %}
+    <p><a href="{{ url_for('route_new_answer', question_id=question_id) }}">Add new answer</a></p>
+    {% else %}
+    <p><a href="#">Add new answer</a></p>
+    {% endif %}
+    <p><a href="{{ url_for('get_last_5_questions_by_time') }}">Back to home</a></p>
+
+    {% endblock %}

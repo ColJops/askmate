@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+    <img src="{{url_for('static',filename='images/Ask-2.svg')}}" style="width:800px;height:250px;">
+    <br><br>
+    <div style="text-align: center;">
+        <h3>Main Menu:</h3>
+        <ul>
+            <h5><a href="/start">Switch View |</a>
+            <a href="/about">About |</a>
+            <a href="/list">Questions |</a>
+            <a href="/login">Login |</a>
+                <a href="/register">Register</a></h5>
+        </ul>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Ask mate</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+			crossorigin="anonymous"
+		/>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='main.css')}}"/>
+	</head>
+	<body id="demo-text">
+		<header class="site-header">
+			<nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+				<div class="container">
+					<a class="navbar-brand mr-4" href="/">Ask Mate</a>
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-toggle="collapse"
+						data-target="#navbarToggle"
+						aria-controls="navbarToggle"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarToggle">
+						<div class="navbar-nav mr-auto">
+							<a class="nav-item nav-link" href="/about">About</a>
+							<a class="nav-item nav-link" href="/list">Questions</a>
+							<a class="nav-item nav-link" href="/add-question"> Add New question</a>
+							
+						</div>
+						<div class="navbar-nav ml-auto">
+							<a class="nav-item nav-link" href="/login">Login</a>
+							<a class="nav-item nav-link" href="/logout">Logout</a>
+							<a class="nav-item nav-link" href="/registration">Register</a>
+							
+						</div>
+
+					</div>
+				</div>
+			</nav>
+		</header>
+
+		<main role="main" class="container">
+            <div class="row">
+              <div class="col-md-8">
+				{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+				  {% for category, message in messages %}
+					<div class="alert alert-{{ category }}">
+					  {{ message }}
+					</div>
+				  {% endfor %}
+				{% endif %}
+			  {% endwith %}
+			  {% block content %}{% endblock %}
+              </div>
+			  
+              <div class="col-md-4">
+                <div class="content-section">
+                  <h4>Go to</h4>
+                  <p class='text-muted'>
+					<p class="p1"><div class="btn btn-outline-info"><a href="{{ url_for('route_question') }}">Add new question</a></div></p>
+					<form action="{{ url_for('search') }}" method="GET">
+						<label for="search">Search in questions</label>
+						<input type="text" id="search" name="search">
+						<button type="submit">Submit</button>
+					</form>
+					<form action="{{ url_for('search') }}" method="GET">
+						<label for="search-by-tags">Search by tags</label>
+						<select type="text" id="search-by-tags" name="search-by-tags">
+							<option value="python">Python</option>
+							<option value="sql">SQL</option>
+							<option value="css">CSS</option>
+						</select>   
+						<button type="submit">Submit</button>
+					</form>
+                    <ul class="list-group">
+                    	<li class="list-group-item list-group-item-light" ><a href='/stats' style="color:black;">Stats</a><br>
+						</li>
+						<li class="list-group-item list-group-item-light" ><a href='/bonus-questions' style="color:black;">Bonus</a><br>
+						{% if user %}
+                    	<li class="list-group-item list-group-item-light">Welcome {{ user }}</li>
+						{% else %}
+						<li class="list-group-item list-group-item-light">Unregistered user</li>
+						{% endif %}
+						
+						<li class="list-group-item list-group-item-light">						
+							<button type="button" onclick="upperFont()">+ A</button>
+							<button type="button" onclick="defau()">Default</button>
+							<button type="button" onclick="lowerFont()">- A</button>
+						</li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </main>
+		  <div class = "comment-item details-row">
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+			integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+			integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+			crossorigin="anonymous"></script>
+		  </div>
+		<!-- Font size section -->
+		<script>
+			function upperFont() {
+  				document.getElementById("demo-text").style.fontSize = "larger";
+				}
+			function lowerFont() {
+  					document.getElementById("demo-text").style.fontSize = "smaller";
+				}
+			function defau() {
+  					document.getElementById("demo-text").style.fontSize = "initial";
+				}
+		</script>  
+		</body>
+
+</html>

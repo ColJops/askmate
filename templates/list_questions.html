@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block content %}
+<img src="{{url_for('static',filename='images/Ask-2.svg')}}" style="width:800px;height:250px;">
+    <br><!--<br>
+    <form action="{{ url_for('search') }}" method="GET">
+        <label for="search">Search in questions</label>
+        <input type="text" id="search" name="search">
+        <button type="submit">Submit</button>
+    </form>
+    <form action="{{ url_for('search') }}" method="GET">
+        <label for="search-by-tags">Search by tags</label>
+        <select type="text" id="search-by-tags" name="search-by-tags">
+            <option value="python">Python</option>
+            <option value="sql">SQL</option>
+            <option value="css">CSS</option>
+        </select>   
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <p><a href="{{ url_for('route_question') }}">Add new question</a></p>-->
+    {% if title == "List questions" %}
+    <p>
+        <form action="{{ url_for('list_question', order_by=order_by, order=order) }}" method="GET">
+            <label for="order_by">Sort questions by: </label>
+            <select name="order_by" id="order_by">
+                {% for key, option in select_options.items() %}
+                     {% if key == order_by %}selected{% endif %}
+                          <option value="{{ key }}">{{ option }}</option> <!-- Fixed -->
+                {% endfor %}
+            </select>
+            <label for="order">Order: </label>
+            <select name="order" id="order">
+                {% for option in order_options %}
+                     {% if option == order %} selected {% endif %}
+                        <option value="{{ option }}">{{ option }}</option> <!-- Fixed -->
+                {% endfor %}
+            </select>
+            <p>
+                <button type="submit">Sort</button>
+            </p>
+        </form>
+    </p>
+    {% endif %}
+<table>
+    <thead>
+        <tr>
+            <th>Submission<br>time</th>
+            <th>View<br>number</th>
+            <th>Vote<br>number</th>
+            <th>Title</th>
+            <th>Vote</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in data %}
+        <tr>
+            <td>{{ row["submission_time"] }}</td>
+            <td>{{ row["view_number"] }}</td>
+            <td>{{ row["vote_number"] }}</td>
+            <td><a href="{{ url_for('display_question', question_id=row['id']) }}">{{ row["title"] }}</a></td>
+            <td>
+                {% if user %}
+                <a href="{{ url_for('vote_for_question', question_id=row['id'], vote_type='up', title=title) }}"><img src="/static/like.png" width="30" height="30" alt="Like"></a>
+                <a href="{{ url_for('vote_for_question', question_id=row['id'], vote_type='down', title=title) }}"><img src="/static/dislike.png" width="30" height="30" alt="Dislike"></a>
+                {% else %}
+                <a href="#"><img src="/static/like.png" width="30" height="30" alt="Like"></a>
+                <a href="#"><img src="/static/dislike.png" width="30" height="30" alt="Dislike"></a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+    {% if "Main page" == title %}
+        <p><a href="{{ url_for('list_question', order_by = 'submission_time', order = 'DESC') }}">List all questions!</a></p>
+        {% else %}
+        <p><a href="{{ url_for('get_last_5_questions_by_time') }}">Go to the main page!</a></p>
+    {% endif %}
+
+{% endblock %}

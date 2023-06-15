@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="decription">
+    <img src="{{url_for('static',filename='images/askwhat.svg')}}" style="width:800px;height:250px;">
+    <br><br>
+    <p>Ask Mate is a web application where users can ask other users on a variety of topics. And get answers. Users can also comment on questions and answers. The application also provides the option of voting on a given question and answer.</p>
+</div>
+<br><br>
+<img src="{{url_for('static',filename='images/ourteam.svg')}}" style="width:800px;height:250px;">
+    <br><br>
+<!---<div class="container" style="margin: auto; padding: 30px; width: 400px; height: 150; background-color: black;">
+    <div class="business-card">
+        <img src="/static/images/istockphoto-1346931734-612x612.jpg" style="float: left; width:auto; height:auto">-->
+        <p class="username">
+        <span>Iga Dobek</span>
+        </p>
+        <p class="github">
+            <span><a href="#">GitHub</a></span>
+        </p>
+        <p class="e-mail">
+            <span><a href="mailto: kontakt@igadbk.pl">kontakt@igadbk.pl</a></span>
+        </p>
+
+    <br><br>
+
+<!---<div class="container" style="margin: auto; padding: 30px; width: 400px; height: 150; background-color: black;">
+    <div class="business-card">
+        <img src="/static/images/programmer-4709802__340.webp" alt="" style="float: left; width:auto; height:auto;">-->
+        <p class="username">
+            <span>Daniel Kupracz</span>
+        </p>
+        <p class="github">
+            <span><a href="https://github.com/ColJops">GitHub</a></span>
+        </p>
+        <p class="email">
+            <span><a href="mailto: col.jops@gmail.com">col.jops@gmail.com</a></span>
+        </p>
+
+
+
+<div>
+    <p><a href="{{ url_for('get_last_5_questions_by_time') }}">Go to the main page!</a></p>
+</div>
+<div id="joke">
+</div>
+<script>
+    window.onload = function() {
+        fetch("https://api.chucknorris.io/jokes/random")
+        .then( response => response.json() )
+        .then( data => dataReady(data) );
+    }
+    function dataReady(data) {
+
+        document.getElementById("joke").innerHTML = data.value;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr >
+      <td scope="col"><h5><b>Username</b></h5></td>
+      <td scope="col"><h5>Registration date</h5></td>
+      <td scope="col"><h5>Count of asked questions</h5></td>
+      <td scope="col"><h5>Count of answers</h5></td>
+      <td scope="col"><h5>Count of comments</h5></td>
+      <td scope="col"><h5>Reputation </h5></td>
+    </tr>
+  </thead>
+  <tbody>
+
+        {% for user in users %}
+    <tr>{% if log %}
+      <td scope="row"><a href="/user/{{user['user_id'] }}"><strong>{{ user['user_name'] }} </strong></a></td>
+      {% else %}
+      <td scope="row"><a href="#"><strong>{{ user['user_name'] }} </strong></a></td>
+      {% endif %}
+      <td>{{ user['date_reg'] }}</td>
+      <td>{{ user.count_question }}</td>
+      <td>{{ user.count_answer }}</td>
+      <td>{{ user.count_comment }}</td>
+      <td>{{ user['user_rep'] }}</td>
+    </tr>
+        {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

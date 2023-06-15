@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <form action="{{ url_for("edit_comment", comment_id=comment_id, question_id=question_id) }}" method="POST">
+        {% for data in comment %}
+            <p>
+                <textarea name="message" cols="30" rows="10" value="}" autofocus required>{{ data["message"] }}</textarea>
+            </p>
+        {% endfor %}
+        <br>
+        {% if user %}
+        <button type="submit">Submit</button>
+        {% else %}
+        <button type="submit" disabled>Submit</button>
+        {% endif %}
+    </form>
+
+    <p>
+        <a href="{{ url_for("display_question", question_id=question_id) }}">Go back to question</a>
+    </p>
+
+{% endblock %}
